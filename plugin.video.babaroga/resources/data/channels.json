@@ -1,0 +1,515 @@
+{
+  "version": 2026101801,
+  "updated": "2026-10-18",
+  "note": "Only channels the broadcaster streams free on its own site. See README for the browser test.",
+  "channels": [
+    {
+      "id": "MRT1.mk",
+      "name": "MRT 1",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/EkkyAE0.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt1"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT2.mk",
+      "name": "MRT 2",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/YvOrUnN.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt2"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "Albanian-language channel. MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT3.mk",
+      "name": "MRT 3",
+      "country": "MK",
+      "genres": [
+        "sports"
+      ],
+      "logo": "https://i.imgur.com/3VZrG4T.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt3"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT4.mk",
+      "name": "MRT 4",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/wSmxUqY.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt4"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT5.mk",
+      "name": "MRT 5",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/zcvKu1h.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt5"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRTSobraniskikanal.mk",
+      "name": "MRT Sobraniski kanal",
+      "country": "MK",
+      "genres": [
+        "parliament"
+      ],
+      "logo": "https://i.imgur.com/fyNQ8Nf.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/sobraniski"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT1Sat.mk",
+      "name": "MRT 1 SAT",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/2bc5PvQ.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt1-sat"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "International feed. MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "MRT2Sat.mk",
+      "name": "MRT 2 SAT",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/WF1Eeuz.png",
+      "website": "https://www.mrt.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://play.mrt.com.mk/live/mrt2-sat"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "headers": {
+        "Referer": "https://play.mrt.com.mk/"
+      },
+      "notes": "International feed. MRT Play; find the stream in the Network tab and add a pattern if the default does not match."
+    },
+    {
+      "id": "Sitel.mk",
+      "name": "Sitel",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/pdobwKt.png",
+      "website": "https://sitel.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://sitel.com.mk/live"
+      },
+      "access": "free",
+      "geo_lock": [
+        "MK"
+      ],
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "The page embeds Makedonski Telekom's player; check it plays without a MaxTV login."
+    },
+    {
+      "id": "Kanal5.mk",
+      "name": "Kanal 5",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/Qw7N3S2.png",
+      "website": "https://www.kanal5.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://kanal5.com.mk/vozivo"
+      },
+      "access": "free",
+      "geo_lock": [
+        "MK"
+      ],
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": ""
+    },
+    {
+      "id": "TV21.mk",
+      "name": "TV21",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/IC1f4h3.png",
+      "website": "https://mk.tv21.tv/",
+      "source": {
+        "type": "page",
+        "url": "https://mk.tv21.tv/live-tv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "The page embeds a player hosted elsewhere; keep only if that host works for TV21."
+    },
+    {
+      "id": "MNetHD.mk",
+      "name": "M-Net HD",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/HDYqWuR.png",
+      "website": "https://mnet.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://mnet.mk/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Find the official live page first."
+    },
+    {
+      "id": "MNetInfo.mk",
+      "name": "M-Net Info",
+      "country": "MK",
+      "genres": [
+        "news"
+      ],
+      "logo": "https://i.ibb.co/0fnY2cj/IMG-20230419-161527.jpg",
+      "website": "https://info.mnet.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://info.mnet.mk/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Find the official live page first."
+    },
+    {
+      "id": "MNetKids.mk",
+      "name": "M-Net Kids",
+      "country": "MK",
+      "genres": [
+        "kids"
+      ],
+      "logo": "https://i.imgur.com/SbKkpuH.png",
+      "website": "https://kids.mnet.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://kids.mnet.mk/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Find the official live page first."
+    },
+    {
+      "id": "MNetSport.mk",
+      "name": "M-Net Sport",
+      "country": "MK",
+      "genres": [
+        "sports"
+      ],
+      "logo": "https://i.imgur.com/7k8ar1Z.png",
+      "website": "https://sport.mnet.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://sport.mnet.mk/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Find the official live page first."
+    },
+    {
+      "id": "NasaTV.mk",
+      "name": "Nasa TV",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/9rB4VZy.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://nasatv.com.mk/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Not on air 24/7."
+    },
+    {
+      "id": "CoolTV.mk",
+      "name": "Cool TV",
+      "country": "MK",
+      "genres": [
+        "general"
+      ],
+      "logo": "https://i.imgur.com/2tFrjUz.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://stream.nasatv.com.mk/cooltv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Nasa TV group. Not on air 24/7."
+    },
+    {
+      "id": "FolkTV.mk",
+      "name": "Folk TV",
+      "country": "MK",
+      "genres": [
+        "music"
+      ],
+      "logo": "https://i.imgur.com/4b9aZ9P.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://stream.nasatv.com.mk/folktv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Nasa TV group. Not on air 24/7."
+    },
+    {
+      "id": "JazzTV.mk",
+      "name": "Jazz TV",
+      "country": "MK",
+      "genres": [
+        "music"
+      ],
+      "logo": "https://i.imgur.com/CbQlSFX.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://stream.nasatv.com.mk/jazztv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Nasa TV group. Not on air 24/7."
+    },
+    {
+      "id": "LoveTV.mk",
+      "name": "Love TV",
+      "country": "MK",
+      "genres": [
+        "music"
+      ],
+      "logo": "https://i.imgur.com/B8iaejQ.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://stream.nasatv.com.mk/lovetv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Nasa TV group. Not on air 24/7."
+    },
+    {
+      "id": "RockTV.mk",
+      "name": "Rock TV",
+      "country": "MK",
+      "genres": [
+        "music"
+      ],
+      "logo": "https://i.imgur.com/Y9miDQo.png",
+      "website": "https://nasatv.com.mk/",
+      "source": {
+        "type": "page",
+        "url": "https://stream.nasatv.com.mk/rocktv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": "",
+      "notes": "Nasa TV group. Not on air 24/7."
+    },
+    {
+      "id": "TopEstradaTV.mk",
+      "name": "TopEstrada TV",
+      "country": "MK",
+      "genres": [
+        "music"
+      ],
+      "logo": "",
+      "website": "https://topestrada.tv/",
+      "source": {
+        "type": "page",
+        "url": "https://topestrada.tv/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": ""
+    },
+    {
+      "id": "KohaTV.mk",
+      "name": "TV Koha",
+      "country": "MK",
+      "genres": [
+        "regional"
+      ],
+      "logo": "https://i.imgur.com/5V9cusJ.png",
+      "website": "https://tvkoha.tv/",
+      "source": {
+        "type": "page",
+        "url": "https://tvkoha.tv/koha-live/"
+      },
+      "access": "free",
+      "geo_lock": null,
+      "drm": false,
+      "status": "to_test",
+      "verified": null,
+      "evidence": ""
+    }
+  ]
+}

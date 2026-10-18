@@ -1,0 +1,21 @@
+name: Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Channel list follows the rules
+        run: python tools/validate_channels.py
+      - name: Python files compile
+        run: python -m compileall -q plugin.video.babaroga tools
+      - name: Zip builds
+        run: python tools/build_zip.py
