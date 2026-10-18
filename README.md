@@ -30,6 +30,15 @@ Installed this way, Kodi updates the add-on by itself. The channel list also upd
 
 Optional: install **IPTV Manager** and turn it on in BabaRoga's settings to see the channels in Kodi's TV section.
 
+## My sources
+
+BabaRoga → **My sources** lets you add your own:
+
+- **Web page:** BabaRoga opens the page like a browser, follows its embedded players, and lists every video stream (`.m3u8`, `.mpd`) and YouTube video it finds. Links are looked up again when you press play, so short-lived links stay fresh.
+- **Channel list (M3U):** from a web address or a file on the TV. Group titles become folders; logos, `#EXTVLCOPT` headers and `url|User-Agent=...` headers are used.
+
+My sources are stored only on the TV and never go into the shared channel list. DRM-protected streams are not played. Long-press (context menu) a source to rename or remove it.
+
 ## Adding or checking a channel (browser test)
 
 1. Find the official site from the broadcaster itself, never from a channel list.

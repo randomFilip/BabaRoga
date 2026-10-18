@@ -84,8 +84,119 @@ def home(menu, country):
     menu.folder("Favourites", "DefaultFavourites.png", action="favourites")
     menu.folder("Recently watched", "DefaultRecentlyAddedEpisodes.png", action="recent")
     menu.folder("Search", "DefaultAddonsSearch.png", action="search")
+    menu.folder("My sources", "DefaultNetwork.png", action="my")
     menu.folder("Tools", "DefaultAddonProgram.png", action="tools")
     menu.end()
+
+
+# ---- My sources -------------------------------------------------------------
+
+def my_menu(menu):
+    from . import mysources
+    menu.action("Add a web page", "DefaultAddSource.png", action="my_add", t="page")
+    menu.action("Add a channel list (M3U) from a web address", "DefaultAddSource.png", action="my_add", t="m3u")
+    menu.action("Add a channel list (M3U) from a file on this TV", "DefaultAddSource.png", action="my_add", t="m3u_file")
+    for s in mysources.load():
+        li = xbmcgui.ListItem(label="{}  [COLOR grey]{}[/COLOR]".format(s["name"], "web page" if s["type"] == "page" else "channel list"), offscreen=True)
+        li.setArt({"icon": "DefaultNetwork.png", "thumb": "DefaultNetwork.png"})
+        li.addContextMenuItems([
+            ("Rename", "RunPlugin({})".format(url(action="my_rename", s=s["id"]))),
+            ("Remove", "RunPlugin({})".format(url(action="my_remove", s=s["id"]))),
+        ])
+        xbmcplugin.addDirectoryItem(menu.handle, url(action="my_open", s=s["id"]), li, isFolder=True)
+    menu.end()
+
+
+def my_add(kind):
+    from . import mysources
+    dialog = xbmcgui.Dialog()
+    if kind == "m3u_file":
+        address = dialog.browse(1, "Choose the channel list", "files", ".m3u|.m3u8")
+        kind = "m3u"
+    else:
+        address = dialog.input("Web address (https://...)", "https://")
+        if address in ("", "https://", "http://"):
+            return
+    if not address:
+        return
+    name = dialog.input("Name", address.split("//")[-1].split("/")[0])
+    mysources.add(kind, name or address, address)
+    common.notify("Added: {}".format(name or address))
+    import xbmc
+    xbmc.executebuiltin("Container.Refresh")
+
+
+def _my_item(menu, label, logo, play_params):
+    li = xbmcgui.ListItem(label=label, offscreen=True)
+    art = logo or "DefaultVideo.png"
+    li.setArt({"icon": art, "thumb": art})
+    li.getVideoInfoTag().setTitle(label)
+    li.setProperty("IsPlayable", "true")
+    xbmcplugin.addDirectoryItem(menu.handle, url(**play_params), li, isFolder=False)
+
+
+def my_open(menu, source_id, group=None):
+    from . import mysources
+    source = mysources.get(source_id)
+    if not source:
+        return menu.end()
+    try:
+        if source["type"] == "page":
+            links = mysources.scan_page(source["url"])
+            if not links:
+                common.notify("No video links found on this page")
+            for i, item in enumerate(links):
+                _my_item(menu, mysources.link_label(item, i), "", dict(action="my_play", s=source_id, i=i))
+        else:
+            from . import m3u
+            entries = mysources.read_list(source)
+            groups = m3u.groups(entries)
+            if group is None and len(groups) > 1:
+                for g in groups:
+                    menu.folder(g, "DefaultGenre.png", action="my_open", s=source_id, g=g)
+                if any(not e["group"] for e in entries):
+                    menu.folder("Other", "DefaultGenre.png", action="my_open", s=source_id, g="")
+            else:
+                for i, e in enumerate(entries):
+                    if group is None or e["group"] == group:
+                        _my_item(menu, e["name"], e["logo"], dict(action="my_play", s=source_id, i=i))
+    except net.GeoBlocked:
+        common.notify("This address is not available from your country")
+    except Exception as exc:
+        common.log("open source {} failed: {}".format(source_id, exc))
+        common.notify("Could not open: {}".format(exc))
+    xbmcplugin.setContent(menu.handle, "videos")
+    menu.end()
+
+
+def my_play(handle, source_id, index):
+    from . import mysources
+    source = mysources.get(source_id)
+    if not source:
+        return player.fail(handle, "Source not found")
+    try:
+        if source["type"] == "page":
+            # Scan again at play time so short-lived links are fresh.
+            item = mysources.scan_page(source["url"])[index]
+            headers = {"User-Agent": net.USER_AGENT, "Referer": item["referer"],
+                       "Origin": net.origin_of(item["referer"])}
+            entry = {"name": source["name"], "url": item["url"], "headers": headers, "props": {}, "logo": ""}
+        else:
+            entry = mysources.read_list(source)[index]
+            entry["headers"].setdefault("User-Agent", net.USER_AGENT)
+        if any("license" in k for k in entry.get("props", {})):
+            raise net.Protected("licence required")
+        stream = resolvers.Stream(entry["url"], entry["headers"])
+        if stream.kind in ("hls", "dash"):
+            resolvers.check_not_protected(stream)
+    except net.GeoBlocked:
+        return player.fail(handle, "Not available from your country")
+    except net.Protected:
+        return player.fail(handle, "Protected stream: BabaRoga does not play DRM")
+    except Exception as exc:
+        common.log("my_play {}/{} failed: {}".format(source_id, index, exc))
+        return player.fail(handle, "This link is not playing right now")
+    player.play(handle, stream, entry)
 
 
 def country_menu(menu, country, code, genre=None):
@@ -149,6 +260,29 @@ def run(argv):
             low = text.lower()
             menu.channels([ch for ch in catalog.visible(country) if low in ch["name"].lower()], country)
         menu.end(sort=True)
+    elif action == "my":
+        my_menu(menu)
+    elif action == "my_add":
+        my_add(params.get("t", "page"))
+    elif action == "my_open":
+        my_open(menu, params["s"], params.get("g"))
+    elif action == "my_play":
+        my_play(handle, params["s"], int(params["i"]))
+    elif action == "my_remove":
+        from . import mysources
+        if xbmcgui.Dialog().yesno(common.ADDON_NAME, "Remove this source?"):
+            mysources.remove(params["s"])
+            import xbmc
+            xbmc.executebuiltin("Container.Refresh")
+    elif action == "my_rename":
+        from . import mysources
+        source = mysources.get(params["s"])
+        if source:
+            name = xbmcgui.Dialog().input("Name", source["name"])
+            if name:
+                mysources.rename(params["s"], name)
+                import xbmc
+                xbmc.executebuiltin("Container.Refresh")
     elif action == "tools":
         menu.action("Update the channel list now", action="update_now")
         menu.action("Check all channels now", action="check_now")
