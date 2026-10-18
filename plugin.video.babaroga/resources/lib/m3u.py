@@ -21,6 +21,7 @@ def parse(text):
                 "name": name or attrs.get("tvg-name") or "Channel",
                 "logo": attrs.get("tvg-logo", ""),
                 "group": attrs.get("group-title", ""),
+                "tvg_id": attrs.get("tvg-id", ""),
             }
             ua = attrs.get("http-user-agent") or attrs.get("user-agent")
             ref = attrs.get("http-referrer") or attrs.get("referrer")
@@ -46,13 +47,26 @@ def parse(text):
             continue
         else:
             url, headers_from_url = split_pipe(line)
-            entry = current or {"name": url.rsplit("/", 1)[-1] or "Channel", "logo": "", "group": ""}
+            entry = current or {"name": url.rsplit("/", 1)[-1] or "Channel", "logo": "", "group": "", "tvg_id": ""}
             entry["url"] = url
             entry["headers"] = dict(headers, **headers_from_url)
             entry["props"] = dict(props)
             entries.append(entry)
             current, headers, props = None, {}, {}
     return entries
+
+
+def guide_urls(text):
+    """TV guide (XMLTV) addresses named in the list's #EXTM3U header line."""
+    for raw in text.splitlines():
+        line = raw.strip().lstrip("\ufeff")
+        if line.startswith("#EXTM3U"):
+            attrs = dict(TAG_ATTR.findall(line))
+            value = attrs.get("url-tvg") or attrs.get("x-tvg-url") or ""
+            return [u.strip() for u in value.split(",") if u.strip().startswith("http")]
+        if line:
+            break
+    return []
 
 
 def split_pipe(line):

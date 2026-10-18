@@ -56,6 +56,11 @@ def rename(source_id, name):
 # ---- channel lists ---------------------------------------------------------
 
 def read_list(source):
+    return read_list_with_guide(source)[0]
+
+
+def read_list_with_guide(source):
+    """(entries, guide addresses) of a channel list."""
     address = source["url"]
     if address.startswith(("http://", "https://")):
         text = net.get(address).text
@@ -65,7 +70,7 @@ def read_list(source):
             text = f.read()
         finally:
             f.close()
-    return m3u.parse(text)
+    return m3u.parse(text), m3u.guide_urls(text)
 
 
 # ---- web pages -------------------------------------------------------------

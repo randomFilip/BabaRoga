@@ -20,7 +20,7 @@ def handle(action, params, menu):
     elif action == "my_open":
         open_source(menu, params["s"], params.get("g"))
     elif action == "my_play":
-        play(menu.handle, params["s"], int(params["i"]) if "i" in params else None)
+        play(menu.handle, params["s"], int(params["i"]) if "i" in params else None, params.get("n"))
     elif action == "my_remove":
         if xbmcgui.Dialog().yesno(common.ADDON_NAME, "Remove this source?"):
             mysources.remove(params["s"])
@@ -198,7 +198,18 @@ def _kind_for_entry(address, headers):
     return kind
 
 
-def _stream_for(source, index=None):
+def _entry(source, index, name=None):
+    """The list entry to play. The name is checked because a list that
+    changes on its server can move channels to other positions."""
+    entries = mysources.read_list(source)
+    if name and not (0 <= index < len(entries) and entries[index]["name"] == name):
+        for e in entries:
+            if e["name"] == name:
+                return e
+    return entries[index]
+
+
+def _stream_for(source, index=None, name=None):
     headers = {"User-Agent": net.USER_AGENT}
     props = {}
     if source["type"] == "page":
@@ -207,7 +218,7 @@ def _stream_for(source, index=None):
         headers.update({"Referer": item["referer"], "Origin": net.origin_of(item["referer"])})
         address, kind = item["url"], item["kind"]
     elif source["type"] == "m3u":
-        entry = mysources.read_list(source)[index]
+        entry = _entry(source, index, name)
         headers.update(entry["headers"])
         props = entry.get("props", {})
         address = entry["url"]
@@ -226,12 +237,12 @@ def _stream_for(source, index=None):
     return stream
 
 
-def play(handle, source_id, index=None):
+def play(handle, source_id, index=None, name=None):
     source = mysources.get(source_id)
     if not source:
         return player.fail(handle, "Source not found")
     try:
-        stream = _stream_for(source, index)
+        stream = _stream_for(source, index, name)
     except net.GeoBlocked:
         return player.fail(handle, "Not available from your country")
     except net.Protected:
