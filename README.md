@@ -64,6 +64,8 @@ Links are looked up again when you press play, so short-lived links stay fresh. 
 
 Other options: **Add a channel list file from this TV** (USB stick or local storage) and **Open an address once** (plays or opens it without saving).
 
+Every channel list keeps a copy on the TV: a list added from a file is copied when you add it (the USB stick can be removed afterwards), and a list from a web address is copied each time it loads, so it still opens when its server is down.
+
 My sources are stored only on the TV and never go into the shared channel list. DRM-protected streams are not played. Long-press (context menu) a source to rename or remove it.
 
 ## Adding or checking a channel (browser test)

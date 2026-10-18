@@ -93,6 +93,7 @@ def _ask_address():
 
 def add(how):
     dialog = xbmcgui.Dialog()
+    text = None
     if how == "file":
         address = dialog.browse(1, "Choose the channel list or stream file", "files", ".m3u|.m3u8|.txt")
         if not address:
@@ -115,7 +116,7 @@ def add(how):
         stype, kind, address = found
     default = address.replace("\\", "/").split("/")[-1] if how == "file" else address.split("//")[-1].split("/")[0]
     name = dialog.input("Name", default) or default
-    mysources.add(stype, name, address, kind=kind)
+    mysources.add(stype, name, address, kind=kind, text=text if how == "file" and stype == "m3u" else None)
     common.notify("Added {} as {}".format(name, detect.LABELS.get(kind, kind)))
     xbmc.executebuiltin("Container.Refresh")
 
