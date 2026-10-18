@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addons>
-<addon id="plugin.video.babaroga" name="BabaRoga" version="0.3.0" provider-name="Filip">
+<addon id="plugin.video.babaroga" name="BabaRoga" version="0.4.0" provider-name="Filip">
     <requires>
         <import addon="xbmc.python" version="3.0.1"/>
         <import addon="script.module.requests" version="2.22.0"/>
@@ -16,7 +16,8 @@
         <platform>all</platform>
         <license>All rights reserved</license>
         <source>https://github.com/randomFilip/BabaRoga</source>
-        <news>0.3.0: Better link finding on web pages: video tags, mp4, player settings, embedded players two levels deep, YouTube live embeds.
+        <news>0.4.0: My sources detects what an address is: stream, video file, channel list, web page or YouTube. Open an address once without saving.
+0.3.0: Better link finding on web pages: video tags, mp4, player settings, embedded players two levels deep, YouTube live embeds.
 0.2.0: My sources: add your own web pages and M3U channel lists.
 0.1.0: first version with North Macedonia channels to test.</news>
         <assets>

@@ -8,6 +8,8 @@ Looks in the page and in its embedded players (iframes, two levels deep) for:
   - schema.org VideoObject data (contentUrl, embedUrl)
   - links written in base64 inside the page (atob("...") and similar)
   - YouTube embeds: single videos and a channel's live stream
+Player links without a telling extension are identified by asking the
+server what it sends (see detect.py).
 """
 import base64
 import html
@@ -19,6 +21,7 @@ from . import common, net
 
 MAX_FRAMES = 8
 MAX_DEPTH = 2
+MAX_PROBES = 5
 
 STREAM_EXT = r"(?:m3u8|mpd)"
 FILE_EXT = r"(?:mp4|webm|m4v)"
@@ -58,6 +61,14 @@ def _kind(url):
     return None
 
 
+STATIC = (".js", ".css", ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico",
+          ".woff", ".woff2", ".ttf", ".html", ".htm", ".php", ".json", ".xml", ".vtt", ".srt")
+
+
+def _static(url):
+    return url.split("?")[0].split("#")[0].lower().endswith(STATIC)
+
+
 def _absolute(link, base):
     link = link.strip()
     if link.startswith("//"):
@@ -71,13 +82,17 @@ def _from_text(text, base):
     raw = text
     text = clean(text)
 
-    def add(link):
+    def add(link, probe=False):
         if not link or link.startswith(("data:", "blob:", "javascript:")):
             return
         url = _absolute(link, base)
         kind = _kind(url)
-        if kind and not any(s in url.lower() for s in SKIP):
+        if any(s in url.lower() for s in SKIP):
+            return
+        if kind:
             out.append((url, kind))
+        elif probe and url.startswith("http") and url != base and not _static(url):
+            out.append((url, "unknown"))
 
     for m in ABSOLUTE.finditer(text):
         add(m.group(0))
@@ -86,7 +101,7 @@ def _from_text(text, base):
     for m in VIDEO_TAG.finditer(text):
         add(m.group(1))
     for m in PLAYER_KEY.finditer(text):
-        add(m.group(1))
+        add(m.group(1), probe=True)  # player settings may point at a link without an extension
     for block in JSON_LD.findall(raw):
         try:
             data = json.loads(block)
@@ -152,6 +167,27 @@ def find(address, referer=None):
             visit(frame, url, depth + 1)
 
     visit(address, referer, 0)
+
+    # Links from player settings with no telling extension: ask the server.
+    from . import detect
+    probed = 0
+    unknown, seen_unknown = [], set()
+    for r in results:
+        if r["kind"] == "unknown" and r["url"] not in seen_unknown:
+            seen_unknown.add(r["url"])
+            unknown.append(r)
+    results[:] = [r for r in results if r["kind"] != "unknown"]
+    for item in unknown:
+        if probed >= MAX_PROBES:
+            continue
+        probed += 1
+        try:
+            kind, final = detect.detect(item["url"], headers={"Referer": item["referer"]})
+        except Exception as exc:
+            common.log("finder could not identify {}: {}".format(item["url"], exc))
+            continue
+        if kind in ("hls", "dash", "file"):
+            results.append({"url": item["url"], "kind": kind, "referer": item["referer"]})
 
     rank = {"hls": 0, "dash": 1, "youtube": 2, "file": 3}
     unique, seen = [], set()
