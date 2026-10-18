@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="repository.babaroga" name="BabaRoga Repository" version="1.0.0" provider-name="Filip">
+    <extension point="xbmc.addon.repository" name="BabaRoga Repository">
+        <dir>
+            <info compressed="false">https://randomfilip.github.io/BabaRoga/repo/addons.xml</info>
+            <checksum>https://randomfilip.github.io/BabaRoga/repo/addons.xml.md5</checksum>
+            <datadir zip="true">https://randomfilip.github.io/BabaRoga/repo/</datadir>
+            <hashes>false</hashes>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Installs and updates BabaRoga</summary>
+        <description lang="en_GB">Install BabaRoga from here and Kodi keeps it up to date automatically.</description>
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>

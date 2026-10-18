@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addons>
+<addon id="plugin.video.babaroga" name="BabaRoga" version="0.1.0" provider-name="Filip">
+    <requires>
+        <import addon="xbmc.python" version="3.0.1"/>
+        <import addon="script.module.requests" version="2.22.0"/>
+        <import addon="inputstream.adaptive" version="21.0.0"/>
+    </requires>
+    <extension point="xbmc.python.pluginsource" library="main.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.service" library="service.py"/>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Free official Balkan live TV</summary>
+        <description lang="en_GB">Plays free live channels from the Balkans exactly as the broadcasters publish them on their own websites. Channels are sorted by country and genre. No paid channels, no DRM, no geo-unblocking.</description>
+        <platform>all</platform>
+        <license>All rights reserved</license>
+        <source>https://github.com/randomFilip/BabaRoga</source>
+        <news>0.1.0: first version with North Macedonia channels to test.</news>
+        <assets>
+            <icon>resources/icon.png</icon>
+        </assets>
+    </extension>
+</addon>
+<addon id="repository.babaroga" name="BabaRoga Repository" version="1.0.0" provider-name="Filip">
+    <extension point="xbmc.addon.repository" name="BabaRoga Repository">
+        <dir>
+            <info compressed="false">https://randomfilip.github.io/BabaRoga/repo/addons.xml</info>
+            <checksum>https://randomfilip.github.io/BabaRoga/repo/addons.xml.md5</checksum>
+            <datadir zip="true">https://randomfilip.github.io/BabaRoga/repo/</datadir>
+            <hashes>false</hashes>
+        </dir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary lang="en_GB">Installs and updates BabaRoga</summary>
+        <description lang="en_GB">Install BabaRoga from here and Kodi keeps it up to date automatically.</description>
+        <platform>all</platform>
+        <assets>
+            <icon>icon.png</icon>
+        </assets>
+    </extension>
+</addon>
+</addons>

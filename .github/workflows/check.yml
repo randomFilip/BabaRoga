@@ -17,5 +17,7 @@ jobs:
         run: python tools/validate_channels.py
       - name: Python files compile
         run: python -m compileall -q plugin.video.babaroga tools
-      - name: Zip builds
-        run: python tools/build_zip.py
+      - name: Kodi repository in docs/ is up to date
+        run: |
+          python tools/build_repo.py
+          git diff --exit-code -- docs || { echo "Run python tools/build_repo.py and commit docs/"; exit 1; }
