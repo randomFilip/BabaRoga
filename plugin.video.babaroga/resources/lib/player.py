@@ -12,7 +12,11 @@ def header_string(headers):
 
 
 def list_item(stream, ch):
-    li = xbmcgui.ListItem(label=ch["name"], path=stream.url, offscreen=True)
+    path = stream.url
+    if stream.kind == "file" and stream.headers:
+        # Kodi's own player takes headers after a "|" for plain video files.
+        path = stream.url + "|" + header_string(stream.headers)
+    li = xbmcgui.ListItem(label=ch["name"], path=path, offscreen=True)
     if ch.get("logo"):
         li.setArt({"thumb": ch["logo"], "icon": ch["logo"]})
     if stream.kind in ("hls", "dash"):

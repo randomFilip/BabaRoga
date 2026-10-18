@@ -34,7 +34,15 @@ Optional: install **IPTV Manager** and turn it on in BabaRoga's settings to see 
 
 BabaRoga → **My sources** lets you add your own:
 
-- **Web page:** BabaRoga opens the page like a browser, follows its embedded players, and lists every video stream (`.m3u8`, `.mpd`) and YouTube video it finds. Links are looked up again when you press play, so short-lived links stay fresh.
+- **Web page:** BabaRoga opens the page like a browser and lists every video it finds, best first. It looks at:
+  - HLS (`.m3u8`) and DASH (`.mpd`) links, absolute or relative
+  - `<video>` and `<source>` tags, including `.mp4` and `.webm` files
+  - player settings (JW Player, Video.js, Clappr, Flowplayer and similar)
+  - schema.org video data, and links written in base64
+  - embedded players (iframes), two levels deep
+  - YouTube videos and YouTube channel live streams
+
+  Links are looked up again when you press play, so short-lived links stay fresh. Ad and tracking links are skipped.
 - **Channel list (M3U):** from a web address or a file on the TV. Group titles become folders; logos, `#EXTVLCOPT` headers and `url|User-Agent=...` headers are used.
 
 My sources are stored only on the TV and never go into the shared channel list. DRM-protected streams are not played. Long-press (context menu) a source to rename or remove it.

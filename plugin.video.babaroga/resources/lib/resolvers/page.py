@@ -1,25 +1,23 @@
 """Open the official live page like a browser and find the player's link.
 
-The channel entry may give a "pattern": a regular expression whose named
-group "url", or else its whole match, is the link. Without one, the first .m3u8 or .mpd
-address on the page is used. Embedded players (iframes) on the page are
-followed, at most three, so a page that loads its player from the
-broadcaster's video host still works.
+Without a "pattern" the shared link finder is used (see finder.py): it reads
+the page and its embedded players and takes the best stream it finds.
+With a "pattern" (a regular expression whose named group "url", or else
+its whole match, is the link) only that is used, on the page and its
+embedded players.
 """
-import html
 import re
 from urllib.parse import urljoin
 
 from . import Stream, official_headers
-from .. import net
+from .. import finder, net
 
-DEFAULT_PATTERN = r"""(?:https?:)?//[^\s"'<>\\]+?\.(?:m3u8|mpd)(?:\?[^\s"'<>\\]*)?"""
-IFRAME = re.compile(r"""<iframe[^>]+src\s*=\s*["']([^"']+)["']""", re.I)
+IFRAME = finder.IFRAME
 MAX_IFRAMES = 3
 
 
 def _clean(text):
-    return html.unescape(text.replace("\\/", "/").replace("\\u0026", "&"))
+    return finder.clean(text)
 
 
 def _find(text, pattern, base):
@@ -34,10 +32,17 @@ def _find(text, pattern, base):
 
 def resolve(ch, source):
     page_url = source["url"]
-    pattern = source.get("pattern") or DEFAULT_PATTERN
     headers = official_headers(ch)
-    text = net.get(page_url, headers={"Referer": headers.get("Referer", page_url)}).text
+    referer = headers.get("Referer", page_url)
 
+    pattern = source.get("pattern")
+    if not pattern:
+        streams = [s for s in finder.find(page_url, referer=referer) if s["kind"] in ("hls", "dash")]
+        if not streams:
+            raise net.NotFound("no stream link on the official page")
+        return Stream(streams[0]["url"], official_headers(ch, page_url=streams[0]["referer"]))
+
+    text = net.get(page_url, headers={"Referer": referer}).text
     link = _find(text, pattern, page_url)
     found_on = page_url
     if not link and source.get("follow_iframes", True):
